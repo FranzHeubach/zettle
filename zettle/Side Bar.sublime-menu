@@ -1,0 +1,10 @@
+[
+{
+	"id": "New Zettle",
+	"caption": "New Zettle",
+	"command": "new_zettle",
+	"args": {
+		"dirs": []
+	}
+}
+]
