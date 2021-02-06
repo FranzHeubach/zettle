@@ -39,20 +39,20 @@ I want to be able to:
 
 I spend most of my time within sublime text when I am working and reading papers. I prefer to take notes in markdown format to be able to take advantage of the plain text tooling ecosystem (for example version control). Markdown can also be converted to just about any format using [Pandoc][pandoc]. This allows me to send someone my notes and work in the format they prefer working with.
 
-I have recently begun exploring the Zettlekasten method for a better way of storing my notes mostly out of curiosity but also because remove the initial barrier to writing something down (determining how to organize, and where to put it). The Zettlekasten allows you to separate that effort and add links and tags another time when reading back through the notes. Most importantly, there is software that supports the Zettlekasten system with powerful search functionality. This makes finding something much easier.
+I have recently begun exploring the Zettlekasten method for a better way of storing my notes mostly out of curiosity but also because it removes the initial barrier to writing something down (determining how to organize and where to put it). The Zettlekasten allows you to separate that effort and add links or tags later when reading back through the notes. Organization grows organically over time (that's the idea anyway). Most importantly, there is software that supports the Zettlekasten system with powerful search functionality. This makes finding something in your collection of notes much easier. You could also take advantage of plain text recursive search tools such as [ripgrep](https://github.com/BurntSushi/ripgrep), if you prefer.
 
-There are a few different software I started using to test the Zettlekasten method. Among them, [Zettlr][zettlr], [Obsidian][obsidian], [Neuron][neuron]. I loved that [Zettlr][zettlr] supported bibliographic citations which was plain text readable (`[@bibtexid, 45]`), supported page numbers, and rendered the citation. It supports math environment, inline math, and math rendering. And the math syntax uses the latex syntax which is powerful, I am already familiar with it, and it can be copied into a latex file when I am eventually writing a paper or technical report.
+There are a few different software I started using to test the Zettlekasten method. Among them, [Zettlr][zettlr], [Obsidian][obsidian], [Neuron][neuron]. I love that [Zettlr][zettlr] supports bibliographic citations which are plain text readable (`[@bibtexid, 45]`), support page numbers, and are rendered. It supports math environments, inline math, and math rendering. And the math syntax uses the Latex syntax which is powerful, something I am already familiar with, and it can be copied into a Latex file when I am eventually writing a paper or technical report.
 
-There was only a few things in [Zettlr][zettlr] that did not fit my work flow. The first, I already have a program that is open most of the time when I am working and reading (Sublime Text). Second, the text inserted when auto-completing a link has the form `[[1235634123]] expanded file name`. This does not work with any other piece of software that implements the Zettlekasten method. And if I were to change my mind later it would be much harder to write a script to change the syntax for all my files because the expanded file name cannot be distinguished from the paragraph it is in. Third, there is no support for normal markdown link auto-completion for linking zettles `[]()`. These are of course only my opinion and very specific to my personal taste.
+There was only a few things in [Zettlr][zettlr] that did not fit my work flow. The first, I already have a program that is open most of the time when I am working and reading (Sublime Text). I would prefer to not have to open another software for plain text editing just to take a note (again my opinion). Second, the text inserted when auto-completing a link has the form `[[1235634123]] expanded file name`. This does not work with any other piece of software that implements the Zettlekasten method. And if I were to change my mind later it would be much harder to write a script to change the syntax for all my files because the expanded file name cannot be distinguished from the paragraph it is in. Third, there is no support for normal markdown link auto-completion for linking zettles `[]()`. These are of course only my opinion and very specific to my personal taste.
 
 I then took a look at [Obsidian][obsidian]. It has great search functionality different in some ways than [Zettlr][zettlr]. It find it feels slightly more snappy (personal speed preference). It keeps it simple and supports syntax highlighting of math and opening of pictures. However, math is not rendered in place and neither are pictures. It does not support citations but highlights the syntax. That was a big reason for not continuing to use this software as I write a decent amount of math in my notes and take notes on bibliographic references I have read.
 
-Finally, I took a look at [Neuron][neuron]. It uses a server client model. The web server it hosts monitors the zettlekasten directory and rebuilds changed files for the website. The website supports searching by words, tags. It shows back links, and folgezettle which I think are implemented in a cool way. Math rendering is supported. However, the search does not search through notes content only the title.
+Finally, I took a look at [Neuron][neuron]. It uses a server client model. The web server monitors the zettlekasten directory and rebuilds changed files for the website. The website supports searching by words, and tags. It shows back links (very useful), and folgezettle which I think are implemented in a cool way. Math rendering is supported. However, the search does not search through the content of the notes, only the title.
 
-All of these software had really nice features. All interact with a folder of markdown files, but each have slightly different syntax they have added to support the zettlekasten system. I developed this sublime text plugin to:
+All of these software had really nice features. All interact with a folder of markdown files, but each have slightly different additional syntax to support the zettlekasten system. I developed this sublime text plugin to:
 
- * Augment the functionality of these software. Each software had unique features that I liked (citations, linking, folgezettle) that could be easily supported within Sublime Text.
- * Keep the ability to add and edit notes with auto-completion in my text editor; the software I usually am using or already have open.
+ * Augment the functionality of these software. Each software had unique features that I liked (citations, linking, folgezettle, back linking). Some could easily be supported within Sublime Text.
+ * Keep the ability to add and edit notes with auto-completion in my text editor; the software I am usually using or already have open.
  * Support the common functionality of these software within sublime text. So when I need to use one of the software for its particular functionality or I want to change my work flow to a specific software I can.
 
 ## Manual Install
@@ -77,6 +77,30 @@ You have to wrap the settings within valid JSON dictionary. For example the `Zet
 
 The `references.json` file of course does not exist yet so you need to create it. Place it where ever you like. I have mine in my literature folder. It must be in CSL JSON format. Each entry in the `references.json` file must have an `id` tag that is unique to that reference (for example `kaminski12DaysIce2010`). These can be generated in Zotero by installing [`Better BibTex`](https://retorque.re/zotero-better-bibtex/) for Zotero. Once installed in Zotero, highlight all your references, right-click, click `Export Items`, select `Better CSL JSON` and export to the file path you specified as the `zettle_references_file_path`.
 
+Finally, markdown syntax does not have auto-complete enabled by default. Easiest way to change this is to open your markdown specific settings using `Preferences > Syntax Specific` in the main menu while having a `.md` file open. This opens `Markdown.sublime-settings` where you can add:
+
+```json
+{
+    "auto_complete_triggers":
+    [
+        {
+            "characters": "abcdefghijklmnopqrstuvwxyz",
+            "selector": "text.html.markdown"
+        }
+    ],
+    "extensions":
+    [
+        "markdown",
+        "md"
+    ],
+    "spell_check": true,
+}
+```
+
+The `auto_complete_triggers` setting enables auto-complete in the markdown file context. The `extensions` setting determines what file extensions that are considered to be of syntax `Markdown` when they are opened. The `spell_check` setting is not needed but greatly improves quality of life while writing notes.
+
+**Note: The `Markdown` syntax does not support math blocks (`$$ $$`) or inline math(`$ $`) in its syntax highlighting among other things. The `Markdown Extended` syntax does so I usually prefer using that one. `Markdown Extended` syntax is part of the Markdown Extended package that can be installed using package control.**
+
 This completes the setup process.
 
 ## Workflow
@@ -90,6 +114,7 @@ When you press `Enter` a new file with that name will be created and opened in t
 **Zettle** supports linking to other files in the `zettle_directory_path` with the `.md` extension. **Zettle**  does this by extending the auto-complete feature of Sublime Text. **Zettle** populates the auto-complete menu using the file names within the directory. There are two different types of links to files supported by **Zettle**.
 
  * `[[]]`: The auto-complete triggers when the first two brackets are typed in (`[[`). Now continue typing to search through the auto-complete drop-down menu. Press `Tab` to auto-complete. This syntax for linking is supported by [Neuron][neuron]. As is the triple square bracket (`[[[]]]`) syntax that represents Folgezettle in [Neuron][neuron]. The auto-complete inserts the file name without the extension. This syntax works with [Neuron][neuron], [Obsidian][obsidian], and triggers a general search in [Zettlr][zettlr].
+ 
  * `[]()`: The generic markdown link syntax is also supported. The auto-complete triggers on the `](`. When the link is inserted the spaces in the name are escaped as `%20`. This is because [Neuron's][neuron] web server does not play well with spaces in normal markdown links.
 
 ### Citations
