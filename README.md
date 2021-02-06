@@ -99,7 +99,7 @@ Finally, markdown syntax does not have auto-complete enabled by default. Easiest
 
 The `auto_complete_triggers` setting enables auto-complete in the markdown file context. The `extensions` setting determines what file extensions that are considered to be of syntax `Markdown` when they are opened. The `spell_check` setting is not needed but greatly improves quality of life while writing notes.
 
-**Note: The `Markdown` syntax does not support math blocks (`$$ $$`) or inline math(`$ $`) in its syntax highlighting among other things. The `Markdown Extended` syntax does so I usually prefer using that one. `Markdown Extended` syntax is part of the Markdown Extended package that can be installed using package control.**
+**Note: The `Markdown` syntax does not support math blocks (`$$ $$`) or inline math(`$ $`) in its syntax highlighting among other things. The `Markdown Extended` syntax does so I usually prefer using that one. `Markdown Extended` syntax is part of the [Markdown Extended](https://packagecontrol.io/packages/Markdown%20Extended) package that can be installed using [Package Control](https://packagecontrol.io/).**
 
 This completes the setup process.
 
