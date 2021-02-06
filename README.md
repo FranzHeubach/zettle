@@ -2,6 +2,10 @@
 
 A [Sublime Text 3][sublime] plugin that supports Zettlekasten work flows.
 
+If you are interested in more information on the Zettlekasten method check out https://zettelkasten.de/.
+
+This is a personal project but I thought I would share it just in case someone else would find it useful. Feel free to raise issues if you see mistakes, have criticism, or have feature suggestions. This includes the documentation. I will respond if I have time :).
+
 [sublime]: https://www.sublimetext.com/
 [neuron]: https://neuron.zettel.page/
 [obsidian]: https://obsidian.md/
@@ -12,7 +16,7 @@ A [Sublime Text 3][sublime] plugin that supports Zettlekasten work flows.
 
 Once **Zettle** is installed and setup it supports these features:
 
- * Creating a new zettle in your Zettlekasten (location defined by `zettle_directory_path`)
+ * Creating a new zettle with a chronological unique ID in your Zettlekasten (location defined by `zettle_directory_path`)
  * Auto-complete `[]()` common markdown links to other notes.
  * Auto-complete `[[]]` zettle links supported by [Neuron][neuron], [Obsidian][obsidian], and [Zettlr][zettlr].
  * Auto-complete `[[[]]]` folgezettle links supported by [Neuron][neuron].
