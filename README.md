@@ -73,7 +73,6 @@ You have to wrap the settings within valid JSON dictionary. For example the `Zet
 {
     "zettle_named_directory_paths": {
         "Zettlekasten": "/home/franz/Documents/Notes/Zettlekasten",
-        // Add more directories here if you wish.
     },
     "zettle_references_file_path": "/home/franz/Documents/Literature/references.json"
 }
