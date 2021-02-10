@@ -16,8 +16,9 @@ This is a personal project but I thought I would share it just in case someone e
 
 Once **Zettle** is installed and setup it supports these features:
 
- * Creating a new zettle with a chronological unique ID in your Zettlekasten (location defined by `zettle_directory_path`)
- * Auto-complete `[]()` common markdown links to other notes.
+ * Multiple different Zettlekasten directories with names and locations of your choice.
+ * Creating a new zettle with a chronological unique ID in a Zettlekasten (if you have more than one, you can choose by name).
+ * Auto-complete `[]()` common markdown links to other notes within the same Zettlekasten.
  * Auto-complete `[[]]` zettle links supported by [Neuron][neuron], [Obsidian][obsidian], and [Zettlr][zettlr].
  * Auto-complete `[[[]]]` folgezettle links supported by [Neuron][neuron].
  * Auto-complete `[@]` bibliographic citation tags supported by [Zettlr][zettlr] using an exported references file in the CSL JSON format.
@@ -63,14 +64,17 @@ Currently the only way to install this plugin is manually. You can either copy t
 
 Before the package works you have to define two settings. These must be placed in the `Zettle.sublime-settings` file in the `User` packages directory. You can open this file directly by using `Preferences > Package Settings > Zettle > Settings - User`. This option should be available once the installation is complete.
 
- * `zettle_directory_path`: The absolute path to the directory where new zettles should be generated.
+ * `zettle_named_directory_paths`: A dictionary / map of the Zettlekasten names to Zettlekasten absolute directory paths.
  * `zettle_references_file_path`: The absolute file path to the exported references from your reference management system of choice (Only tested with Zotero). The exported file must be in CSL JSON format. More info below.
 
 You have to wrap the settings within valid JSON dictionary. For example the `Zettle.sublime-settings` I use is:
 
 ```json
 {
-    "zettle_directory_path": "/home/franz/Documents/Notes/Zettlekasten",
+    "zettle_named_directory_paths": {
+        "Zettlekasten": "/home/franz/Documents/Notes/Zettlekasten",
+        // Add more directories here if you wish.
+    },
     "zettle_references_file_path": "/home/franz/Documents/Literature/references.json"
 }
 ```
@@ -111,7 +115,7 @@ When you press `Enter` a new file with that name will be created and opened in t
 
 ### Linking 
 
-**Zettle** supports linking to other files in the `zettle_directory_path` with the `.md` extension. **Zettle**  does this by extending the auto-complete feature of Sublime Text. **Zettle** populates the auto-complete menu using the file names within the directory. There are two different types of links to files supported by **Zettle**.
+**Zettle** supports linking to other files in the same Zettlekasten with the `.md` extension. **Zettle**  does this by extending the auto-complete feature of Sublime Text. **Zettle** populates the auto-complete menu using the file names within the directory. There are two different types of links to files supported by **Zettle**.
 
  * `[[]]`: The auto-complete triggers when the first two brackets are typed in (`[[`). Now continue typing to search through the auto-complete drop-down menu. Press `Tab` to auto-complete. This syntax for linking is supported by [Neuron][neuron]. As is the triple square bracket (`[[[]]]`) syntax that represents Folgezettle in [Neuron][neuron]. The auto-complete inserts the file name without the extension. This syntax works with [Neuron][neuron], [Obsidian][obsidian], and triggers a general search in [Zettlr][zettlr].
  
