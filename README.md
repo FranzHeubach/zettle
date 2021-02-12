@@ -18,6 +18,7 @@ Once **Zettle** is installed and setup it supports these features:
 
  * Multiple different Zettlekasten directories with names and locations of your choice.
  * Creating a new zettle with a chronological unique ID in a Zettlekasten (if you have more than one, you can choose by name).
+ * Opening a zettle from any Zettlekasten directory (if you have more than one Zettlekasten, you can choose by name).
  * Auto-complete `[]()` common markdown links to other notes within the same Zettlekasten.
  * Auto-complete `[[]]` zettle links supported by [Neuron][neuron], [Obsidian][obsidian], and [Zettlr][zettlr].
  * Auto-complete `[[[]]]` folgezettle links supported by [Neuron][neuron].
@@ -124,6 +125,6 @@ When you press `Enter` a new file with that name will be created and opened in t
 
 **Zettle** uses the same citation syntax that [Zettlr][zettlr] uses. The syntax is `[@citationid]`. The auto-complete triggers after `[@`. A page number can be included in the citation using a comma, space, then a number within the citation (for example `[@citationid, 456]`). This does not mean anything to [Neuron][neuron] or [Obsidian][obsidian], but it will render as a reference in [Zettlr][zettlr].
 
-### Searching
+### Opening
 
-Sublime text supports the amazing **Search Anything** feature. So if you have the Zettlekasten folder open in Sublime Text you can search and open a specific note quickly using `Ctrl + P`.
+Any time you want to revisit a note you can. Use the Command Palette (`Ctrl + P`), and type `zettle`. Select `Zettle: Open Zettle` from the list. If you have more than one Zettlekasten you will now see a list of your named Zettlekasten. If you have only one you will skip the selection. Once the Zettlekasten directory is selected you will get a new selection panel populated with the zettle file names. Fuzzy search works, so search away. The currently highlighted zettle file name will show as a preview in the window. Finally, the selected zettle will open in a new tab.

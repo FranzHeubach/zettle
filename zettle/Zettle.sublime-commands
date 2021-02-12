@@ -1,3 +1,4 @@
 [
-    {"caption": "Zettle: New Zettle", "command": "new_zettle_in_zettlekasten"}
+    {"caption": "Zettle: New Zettle", "command": "new_zettle_in_zettlekasten"},
+    {"caption": "Zettle: Open Zettle", "command": "open_zettle"},
 ]

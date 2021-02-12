@@ -88,6 +88,60 @@ class NewZettleCommand(sublime_plugin.WindowCommand):
         else:
             return False
 
+class OpenZettleCommand(sublime_plugin.WindowCommand):
+    """
+    Open a zettle in one of the existing zettlekasten.
+    
+    If there is only one zettlekasten it skips the first menu. If there are none
+    it displays the user a error message and completes.
+    """
+    def run(self):
+        self.named_paths = get_zettle_named_directory_paths()
+        self.names = list()
+        self.paths = list()
+
+        for name, path in self.named_paths.items():
+            self.names.append(name)
+            self.paths.append(path)
+
+        if len(self.paths) == 1:
+            self.on_select_directory_done(0)
+        else:
+            self.window.show_quick_panel(self.names, self.on_select_directory_done)
+
+    def on_select_directory_done(self, index):
+        if index == -1:
+            # Was cancelled.
+            return
+        
+        directory = self.paths[index]
+        with cd(directory):
+            files = glob.glob("[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*.md")
+        
+        if not files:
+            sublime.error_message("{} contains no zettle.".format(self.names[index]))
+            return
+
+        abs_paths = [os.path.join(directory, file) for file in files]
+        self.window.show_quick_panel(
+            files, 
+            functools.partial(self.on_select_file_done, abs_paths), 
+            sublime.MONOSPACE_FONT | sublime.KEEP_OPEN_ON_FOCUS_LOST,
+            0,
+            functools.partial(self.on_select_file_highlighted, abs_paths)
+        )
+
+    def on_select_file_highlighted(self, abs_paths, index):
+        abs_file_path = abs_paths[index]
+        self.window.open_file(abs_file_path, sublime.TRANSIENT)
+
+    def on_select_file_done(self, abs_paths, index):
+        if index == -1:
+            # Was cancelled.
+            return
+        abs_file_path = abs_paths[index]
+        self.window.open_file(abs_file_path)
+
 class NewZettleInZettlekastenCommand(sublime_plugin.WindowCommand):
     """
     A command to create and open a new zettle in one of the available
