@@ -169,6 +169,9 @@ class NewZettleInZettlekastenCommand(sublime_plugin.WindowCommand):
             self.window.show_quick_panel(self.names, functools.partial(self.on_quick_panel_done, date_str))
     
     def on_quick_panel_done(self, date_str, index):
+        if index == -1:
+            # was cancelled
+            return
         selected_path = self.paths[index]            
         self.window.show_input_panel("Zettle Name:", "{}.md".format(date_str), functools.partial(self.on_input_panel_done, selected_path), None, None)
 
