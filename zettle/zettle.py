@@ -40,7 +40,15 @@ def get_zettle_named_directory_paths():
     for name, path in zettle_named_directory_paths.items():
         if not os.path.isdir(path):
             raise ValueError('Path in setting "zettle_named_directory_paths": {}: {} is not a valid directory.'.format(name, path))
-    return zettle_named_directory_paths
+    
+    names = list()
+    paths = list()
+
+    for name, path in zettle_named_directory_paths.items():
+        names.append(name)
+        paths.append(os.path.realpath(path))
+
+    return names, paths
 
 class cd:
     """
@@ -96,13 +104,7 @@ class OpenZettleCommand(sublime_plugin.WindowCommand):
     it displays the user a error message and completes.
     """
     def run(self):
-        self.named_paths = get_zettle_named_directory_paths()
-        self.names = list()
-        self.paths = list()
-
-        for name, path in self.named_paths.items():
-            self.names.append(name)
-            self.paths.append(path)
+        self.names, self.paths = get_zettle_named_directory_paths()
 
         if len(self.paths) == 1:
             self.on_select_directory_done(0)
@@ -155,13 +157,7 @@ class NewZettleInZettlekastenCommand(sublime_plugin.WindowCommand):
     """
     def run(self):
         date_str = generate_chronological_id()
-        self.named_paths = get_zettle_named_directory_paths()
-        self.names = list()
-        self.paths = list()
-
-        for name, path in self.named_paths.items():
-            self.names.append(name)
-            self.paths.append(path)
+        self.names, self.paths = get_zettle_named_directory_paths()
 
         if len(self.paths) == 1:
             self.window.show_input_panel("Zettle Name:", "{}.md".format(date_str), functools.partial(self.on_input_panel_done, self.paths[0]), None, None)
@@ -201,11 +197,11 @@ class ZettlePath(sublime_plugin.EventListener):
         if identifier != r'[[' and identifier != r'](':
             return
 
-        paths = get_zettle_named_directory_paths()
+        names, paths = get_zettle_named_directory_paths()
 
         file_name = view.file_name()
         parent_directory = os.path.dirname(file_name)
-        if parent_directory not in paths.values():
+        if parent_directory not in paths:
             # The file we are editing is not in a zettlekasten directory
             return
 
